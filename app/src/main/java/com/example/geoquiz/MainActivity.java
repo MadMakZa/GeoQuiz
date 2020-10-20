@@ -1,11 +1,14 @@
 package com.example.geoquiz;
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;
+    private ImageButton mPrevButton;
+    private ImageButton mNextButton;
     private TextView mQuestionTextView;
 
     //массив с вопросами и ответами на них
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         //вьюшка с вопросами
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
+
         mTrueButton = (Button) findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,25 +61,46 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        //кнопка prev
+        mPrevButton = (ImageButton) findViewById(R.id.prev_button);
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentIndex != 0) {
+                    mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
+                    updateQuestion();
+                }
 
-        mNextButton = (Button) findViewById(R.id.next_button);
+            }
+
+        });
+        //кнопка next
+        mNextButton = (ImageButton) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-//                int question = mQuestionBank[mCurrentIndex].getTextResId();
-//                mQuestionTextView.setText(question);
                 updateQuestion();
             }
         });
         updateQuestion();
+        //кнопка-текст-вопрос
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
+            }
+        });
 
     }
     //создание отдельного метода для обновления вопроса, что бы не дублировать код
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+
     }
+
     //метод сравнивающий ответ пользователя с правильным
     private void checkAnswer(boolean userPressedTrue){
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();

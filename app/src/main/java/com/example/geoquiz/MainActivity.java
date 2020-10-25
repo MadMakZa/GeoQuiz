@@ -17,6 +17,7 @@ import static android.view.Gravity.*;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private static final String KEY_INDEX = "index"; //ключ для сохранения активити
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -41,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_main);
+
+        //если уже есть значение (прогресс в активити) проверка
+        if (savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);
+        }
 
         //вьюшка с вопросами
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -135,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause() called");
+    }
+    //сохранение прогресса активити
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState hoba-na");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
     }
 
     @Override

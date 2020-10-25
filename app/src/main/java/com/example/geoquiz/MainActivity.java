@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final String KEY_INDEX = "index"; //ключ для сохранения активити
+    private int score = 0;                   //количество верных ответов
+
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               checkAnswer(true);
+              mFalseButton.setEnabled(false);
 
 
             }
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
+                mTrueButton.setEnabled(false);
 
             }
         });
@@ -76,9 +80,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mCurrentIndex != 0) {
-                    mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
+                    mCurrentIndex = mCurrentIndex - 1;
                     updateQuestion();
+                }else{
+                    mPrevButton.setEnabled(false);
                 }
+                mNextButton.setEnabled(true);
+
 
             }
 
@@ -88,8 +96,16 @@ public class MainActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
+                if (mCurrentIndex != (mQuestionBank.length - 1)) {
+                    mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                    updateQuestion();
+                    mFalseButton.setEnabled(true);
+                    mTrueButton.setEnabled(true);
+                }else{
+                    mNextButton.setEnabled(false);
+                    Toast.makeText(getApplicationContext(), "Your score "+score, Toast.LENGTH_LONG).show();
+                }
+                mPrevButton.setEnabled(true);
             }
         });
         updateQuestion();
@@ -97,8 +113,13 @@ public class MainActivity extends AppCompatActivity {
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
+                if(mCurrentIndex != (mQuestionBank.length -1)) {
+                    mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                    updateQuestion();
+                }else{
+                    //показать результат теста
+                    Toast.makeText(getApplicationContext(), "Your score "+score, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -118,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (userPressedTrue == answerIsTrue){
             messageResId = R.string.correct_toast;
+            score += 1;
+
         }else {
             messageResId = R.string.incorrect_toast;
         }

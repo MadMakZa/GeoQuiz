@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //создание отдельного метода для обновления вопроса, что бы не дублировать код
     private void updateQuestion() {
+
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
 

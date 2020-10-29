@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mPrevButton;
     private ImageButton mNextButton;
     private TextView mQuestionTextView;
+    private Button mCheatButton;
 
     //массив с вопросами и ответами на них
     private Question[] mQuestionBank = new Question[]{
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         //вьюшка с вопросами
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
-
         mTrueButton = (Button) findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
               mFalseButton.setEnabled(false);
 
 
+            }
+        });
+
+        //кнока активирующая чит (кэп)
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //start cheat
             }
         });
 

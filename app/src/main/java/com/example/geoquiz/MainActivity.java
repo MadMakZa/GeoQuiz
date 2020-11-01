@@ -3,6 +3,7 @@ package com.example.geoquiz;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -70,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //start cheat
-            }
+                //start cheat activity
+                Intent intent = new Intent(MainActivity.this, CheatActivity.class);
+                startActivity(intent);            }
         });
 
         mFalseButton = (Button) findViewById(R.id.false_button);

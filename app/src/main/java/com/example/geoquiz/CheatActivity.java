@@ -35,7 +35,7 @@ public class CheatActivity extends AppCompatActivity {
 
         mAnswerTextView = (TextView) findViewById(R.id.answer_text_view);
         mShowAnswerButton = (Button) findViewById(R.id.show_answer_button);
-        mShowAnswerButton.setOnClickListener(new View.onClickListener(){
+        mShowAnswerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if (mAnswerIsTrue){

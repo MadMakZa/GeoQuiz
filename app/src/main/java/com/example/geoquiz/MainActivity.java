@@ -72,8 +72,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //start cheat activity
-                Intent intent = new Intent(MainActivity.this, CheatActivity.class);
-                startActivity(intent);            }
+//                Intent intent = new Intent(MainActivity.this, CheatActivity.class);
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+                Intent intent = CheatActivity.newIntent(MainActivity.this, answerIsTrue);
+                startActivity(intent);
+            }
         });
 
         mFalseButton = (Button) findViewById(R.id.false_button);

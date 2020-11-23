@@ -28,7 +28,7 @@ public class CheatActivity extends AppCompatActivity {
         setResult(RESULT_OK, data);
     }
     //декодирование интента результата отправляемого в мейн активити
-    private static boolean wasAnswerShown(Intent result){
+    public static boolean wasAnswerShown(Intent result) {
         return result.getBooleanExtra(EXTRA_ANSWER_SHOWN, false);
     }
 

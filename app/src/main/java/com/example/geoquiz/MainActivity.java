@@ -3,6 +3,7 @@ package com.example.geoquiz;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     };
     //переменная для индекса массива
     private int mCurrentIndex = 0;
+    private boolean mIsCheater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mCurrentIndex != (mQuestionBank.length - 1)) {
                     mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                    mIsCheater = false;
                     updateQuestion();
                     mFalseButton.setEnabled(true);
                     mTrueButton.setEnabled(true);
@@ -138,6 +141,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    //метод говорящий читерок ты или нет
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data == null) {
+                return;
+            }
+            mIsCheater = CheatActivity.wasAnswerShown(data);
+        }
+    }
     //создание отдельного метода для обновления вопроса, что бы не дублировать код
     private void updateQuestion() {
 
@@ -151,13 +169,16 @@ public class MainActivity extends AppCompatActivity {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
 
         int messageResId = 0;
-
-        if (userPressedTrue == answerIsTrue){
-            messageResId = R.string.correct_toast;
-            score += 1;
-
+        if (mIsCheater){
+            messageResId = R.string.judgment_toast;
         }else {
-            messageResId = R.string.incorrect_toast;
+            if (userPressedTrue == answerIsTrue) {
+                messageResId = R.string.correct_toast;
+                score += 1;
+
+            } else {
+                messageResId = R.string.incorrect_toast;
+            }
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();

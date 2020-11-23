@@ -13,11 +13,20 @@ public class CheatActivity extends AppCompatActivity {
 
     //ключ экстра
     private static final String EXTRA_ANSWER_IS_TRUE = "com.example.geoquiz.answer_is_true";
+    //переменная которая говорит, что был подсмотрен результат или нет
+    private static final String EXTRA_ANSWER_SHOWN = "com.example.geoquiz.answer_shown";
     //для хранения верного ответа и передачи его в mainActivity
     private boolean mAnswerIsTrue;
 
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
+
+    //метод который упаковывает результат в интент и отправляет его в мейн активити
+    private void setAnswerShownResult(boolean isAnswerShown){
+        Intent data = new Intent();
+        data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
+        setResult(RESULT_OK, data);
+    }
 
     //инкапсуляция метода получения ответа на вопрос
     public static Intent newIntent (Context packageContext, boolean answerIsTrue){
@@ -43,6 +52,7 @@ public class CheatActivity extends AppCompatActivity {
                 }else {
                     mAnswerTextView.setText(R.string.false_button);
                 }
+                setAnswerShownResult(true);
             }
 
         });

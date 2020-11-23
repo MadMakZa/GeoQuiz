@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String KEY_INDEX = "index"; //ключ для сохранения активити
     private int score = 0;                   //количество верных ответов
+    private static final int REQUEST_CODE_CHEAT = 0;
 
 
     private Button mTrueButton;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 //start cheat activity
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
                 Intent intent = CheatActivity.newIntent(MainActivity.this, answerIsTrue);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
             }
         });
 

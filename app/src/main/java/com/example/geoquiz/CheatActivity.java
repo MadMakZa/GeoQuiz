@@ -77,7 +77,7 @@ public class CheatActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        
+
                     }
 
                     @Override
@@ -89,8 +89,9 @@ public class CheatActivity extends AppCompatActivity {
                     public void onAnimationRepeat(Animator animation) {
 
                     }
-                
+
                 });
+                anim.start();
             }
 
         });

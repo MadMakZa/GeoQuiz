@@ -137,7 +137,9 @@ public class MainActivity extends AppCompatActivity {
                     //показать результат теста
                     Toast.makeText(getApplicationContext(), "Your score "+score, Toast.LENGTH_LONG).show();
                 }
+
             }
+
         });
 
     }

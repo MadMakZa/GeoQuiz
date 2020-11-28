@@ -1,11 +1,15 @@
 package com.example.geoquiz;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -49,6 +53,7 @@ public class CheatActivity extends AppCompatActivity {
         mAnswerTextView = (TextView) findViewById(R.id.answer_text_view);
         mShowAnswerButton = (Button) findViewById(R.id.show_answer_button);
         mShowAnswerButton.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v){
                 if (mAnswerIsTrue){
@@ -57,6 +62,35 @@ public class CheatActivity extends AppCompatActivity {
                     mAnswerTextView.setText(R.string.false_button);
                 }
                 setAnswerShownResult(true);
+                
+                //анимация 
+                int cx = mShowAnswerButton.getWidth() / 2;
+                int cy = mShowAnswerButton.getHeight() /2;
+                float radius = mShowAnswerButton.getWidth();
+                Animator anim = ViewAnimationUtils.createCircularReveal(mShowAnswerButton, cx, cy, radius, 0);
+                anim.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        mShowAnswerButton.setVisibility(View.INVISIBLE);
+                        }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                
+                });
             }
 
         });
